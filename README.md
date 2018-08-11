@@ -7,6 +7,8 @@ The first step is to use Nvidia's compiler nvcc to compile/link the .cu file int
 
 The second step is to use MSVC to compile the main C++ program and then link with the two .obj files created in the first step. 
 
+Refer to the build.bat file for the details of compilation.
+
 # Build example
 ```c
 // on Windows with VS 2015 and CUDA Toolkit 9.1 installed
@@ -21,17 +23,17 @@ The CUDA code is contained in .cu files. Each .cu file consists of three types o
 
 1. host code
 
-The host code runs in CPU and is prefixed with "\__host__". The prefix can be omitted since "host code" is the default.
+The host code runs in CPU and is prefixed with "\_\_host__". The prefix can be omitted since "host code" is the default.
 
 2. kernel code
 
-The kernel code runs in GPU and is prefixed with "\__global__", which can only be called from host code in the form of "<<<blocksPerGrid, threadsPerBlock>>>"
+The kernel code runs in GPU and is prefixed with "\_\_global__", which can only be called from host code in the form of "<<<blocksPerGrid, threadsPerBlock>>>"
 
 3. device code
 
 The device code running in GPU is simply the helper function that the kernel code or other device code can call.
 
-Sometimes, the code can be prefixed with both "\__device__" and "\__host__", which make it callable by device code, kernel code and host code.
+Sometimes, the code can be prefixed with both "\_\_device__" and "\_\_host__", which make it callable by device code, kernel code and host code.
 
 # Reference
 * https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html
