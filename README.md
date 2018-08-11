@@ -9,7 +9,7 @@ The second step is to use MSVC to compile the main C++ program and then link wit
 
 # Build example
 ```c
-// on Windows with VS 2015 and CUDA Toolkit 9.2 installed
+// on Windows with VS 2015 and CUDA Toolkit 9.1 installed
 git clone https://github.com/gongfan99/Simple_CUDA_example.git
 build
 test

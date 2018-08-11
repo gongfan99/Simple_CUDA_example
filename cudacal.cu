@@ -1,5 +1,23 @@
+/**
+    cudacal.h
+    Purpose: a simple CUDA example
+
+    @author Fan Gong
+    @version 1.0 07/03/18 
+*/
+
 #include <stdexcept>
 
+/**
+    kernel code to calculate sqr of x.
+    In CUDA, kernal code is prefixed with "__global__", which can be called from host code in the form of "<<<blocksPerGrid, threadsPerBlock>>>"
+
+    @param n The length of x and y.
+    @param x The input array.
+    @param y The output array.
+    @param run_num The number of iterations.
+    @return none
+*/
 __global__ void _cuda_vdSqr(int n, double *x, double *y, int run_num){
   int index = blockIdx.x * blockDim.x + threadIdx.x;
   int stride = blockDim.x * gridDim.x;
@@ -8,10 +26,28 @@ __global__ void _cuda_vdSqr(int n, double *x, double *y, int run_num){
   }
 }
 
+/**
+    error check function.
+
+    @param err The return value of a CUDA function.
+    @return none
+*/
 static void errChk(cudaError_t err){
   if (err != cudaSuccess) throw std::runtime_error(cudaGetErrorString(err));
 }
 
+/**
+    host code.
+    In CUDA, host code is the code that runs in the CPU, which calls the kernel code to do GPU calculation.
+
+    @param n The length of x and y.
+    @param x The input array.
+    @param y The output array.
+    @param run_num The number of iterations.
+    @param threadsPerBlock The threads in each block. 256 is a good start.
+    @param blocksPerGrid The blocks in each grid.
+    @return none
+*/
 void cuda_vdSqr(int n, double *x, double *y, int run_num, int threadsPerBlock, int blocksPerGrid){
   size_t size = n * sizeof(double);
   double *d_x = nullptr;
