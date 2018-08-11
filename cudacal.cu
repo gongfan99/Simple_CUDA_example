@@ -9,7 +9,19 @@
 #include <stdexcept>
 
 /**
-    kernel code to calculate sqr of x.
+    device code to calculate sqr of x.
+    In CUDA, device code is prefixed with "__device__", which only runs in GPU. It can only be called by other device code or kernel code.
+	Sometimes, the code prefixed with both "__device__" and "__host__" can be called by device code, kernel code or host code.
+
+    @param x The input number.
+    @return The square of the input
+*/
+__device__ static double _cuda_sqr(double x){
+  return x * x;
+}
+
+/**
+    kernel code to calculate sqr of x array.
     In CUDA, kernal code is prefixed with "__global__", which can be called from host code in the form of "<<<blocksPerGrid, threadsPerBlock>>>"
 
     @param n The length of x and y.
@@ -22,7 +34,7 @@ __global__ void _cuda_vdSqr(int n, double *x, double *y, int run_num){
   int index = blockIdx.x * blockDim.x + threadIdx.x;
   int stride = blockDim.x * gridDim.x;
   for (int i = index; i < n; i += stride){
-    for (int j = 0; j < run_num; ++j) y[i] = x[i] * x[i];
+    for (int j = 0; j < run_num; ++j) y[i] = _cuda_sqr(x[i]);
   }
 }
 
@@ -39,6 +51,7 @@ static void errChk(cudaError_t err){
 /**
     host code.
     In CUDA, host code is the code that runs in the CPU, which calls the kernel code to do GPU calculation.
+	It can be prefixed by "__host__" which is unnecessary since it is the default.
 
     @param n The length of x and y.
     @param x The input array.

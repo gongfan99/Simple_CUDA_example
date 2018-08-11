@@ -14,6 +14,24 @@ git clone https://github.com/gongfan99/Simple_CUDA_example.git
 build
 test
 ```
+# Introduction
+A NVIDIA GPU consists of several Streaming Multiprocessors (SMs). When GPU runs, each SM can process several blocks each of which consists of many threads. After each SM finishes processing the current batch of blocks, it can start to process the next batch of blocks. Generally the total number of threads that each SM can process concurrently can be several hundread.
+
+The CUDA code is contained in .cu files. Each .cu file consists of several types of functions:
+
+1. host code
+
+The host code runs in CPU and can be prefixed by "__host__" which is unnecessary since it is the default.
+
+2. kernel code
+
+The kernel code runs in GPU and is prefixed with "__global__", which can be called from host code in the form of "<<<blocksPerGrid, threadsPerBlock>>>"
+
+3. device code
+
+The device code which runs in GPU is simply the helper function that the kernel code or other device code can call.
+
+Sometimes, the code can be prefixed with both "__device__" and "__host__", which make it callable by device code, kernel code or host code.
 
 # Reference
 * https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html
