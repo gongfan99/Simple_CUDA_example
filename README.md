@@ -17,7 +17,7 @@ build
 test
 ```
 # Introduction
-A NVIDIA GPU consists of several Streaming Multiprocessors (SMs). When GPU runs, each SM can process several blocks each of which consists of many threads. After each SM finishes processing the current batch of blocks, it can start to process the next batch of blocks. Generally the total number of threads that each SM processes concurrently can be several hundread.
+A NVIDIA GPU consists of several Streaming Multiprocessors (SMs). When GPU runs, each SM can process several blocks each of which consists of many threads. After each SM finishes processing the current batch of blocks, it can start to process the next batch of blocks. Generally the total number of threads that each SM processes concurrently can be several hundreds.
 
 The CUDA code is contained in .cu files. Each .cu file consists of three types of functions:
 
